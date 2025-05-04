@@ -1,81 +1,17 @@
-/* Sidebar Styles */
-
-.sidebar {
-    width: 220px;
-    height: 100vh;
-    background: #1e1e2f;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-.sidebar .profile {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.sidebar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    transition: transform 0.3s;
-}
-
-.sidebar img:hover {
-    transform: scale(1.1);
-}
-
-.sidebar .profile-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.sidebar nav ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-}
-
-.sidebar nav ul li {
-    padding: 15px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-    text-align: center;
-    width: 100%;
-}
-
-.sidebar nav ul li.active,
-.sidebar nav ul li:hover {
-    background: #292943;
-    border-radius: 10px;
-    transform: scale(1.05);
-}
-
-
-/* Main Content */
-
 .app-container {
     display: flex;
+    text-align: center;
     width: 100%;
     height: 100vh;
 }
 
 .todo-content {
-    margin-left: 220px;
-    flex-grow: 1;
+    margin-left: 500px;
+    margin-right: 500px;
     padding: 40px;
     background: #f4f4f8;
     display: flex;
     flex-direction: column;
-    align-items: center;
     transition: all 0.3s ease-in-out;
 }
 
@@ -171,6 +107,11 @@
     flex-grow: 1;
 }
 
+.task-item.completed span {
+    text-decoration: line-through;
+    color: grey;
+}
+
 .task-item button {
     background: none;
     border: none;
@@ -200,5 +141,24 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+
+/* Responsive Styles */
+
+@media (max-width: 844px) {
+    .app-container {
+        display: flex;
+        text-align: center;
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+@media (max-width: 1368px) {
+    .todo-content {
+        margin-left: 100px;
+        margin-right: 500px;
     }
 }

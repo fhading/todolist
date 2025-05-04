@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from "uuid"; //  import ng  uuid para maka generate ng t
 import "./style/TodoApp.css"; 
 
 const ToDoApp = () => {
-  // store ng mga list ng task
+  // store ng mga list ng task/ array
   const [tasks, setTasks] = useState([]);
   // store yung sa import ng value
   const [taskInput, setTaskInput] = useState("");
-  //  store yung  para mag select ng categoru sa task
+  //  store yung  para mag select ng category sa task
   const [selectedCategory, setSelectedCategory] = useState("personal");
   // ito store ng id pag mag edit ng task
   const [editingId, setEditingId] = useState(null);
@@ -17,7 +17,7 @@ const ToDoApp = () => {
     // para di empty tasks
     if (taskInput.trim() === "") return;
     
-    // mmag add task sa list huhu
+    // mag add task sa list huhu
     setTasks([
       ...tasks,
       { id: uuidv4(), text: taskInput, completed: false, category: selectedCategory },
@@ -46,7 +46,7 @@ const ToDoApp = () => {
     setEditText(text); 
   };
 
-  //  save ng  edit task huhu
+  // save ng edit task huhu
   const saveEdit = (id) => {
     setTasks(
       tasks.map((task) => (task.id === id ? { ...task, text: editText } : task))
@@ -55,61 +55,36 @@ const ToDoApp = () => {
   };
 
   return (
-    <div className="app-container">
-      {/* char char navigation  */}
-      <aside className="sidebar">
-        <div className="profile">
-          <img src="/src/components/MOANA.png" alt="Profile" />
-          <p className="username">Fhadia Maria Veron</p>
-          <h2>TO-DO List</h2>
-        </div>
-        <nav>
-          <ul>
-            <li className="active">Today tasks</li>
-            <li>Scheduled tasks</li>
-            <li>Settings</li>
-            <li>Log out</li>
-          </ul>
-        </nav>
-      </aside>
-
     
       <main className="todo-content">
-        <h1 className="main-focus">Today's To do List</h1>
+        <h1 className="main-focus"> To Do List</h1>
         <h2 className="focus-task">MY TASKS</h2>
 
         
         <div className="task-input-section">
-         
           <select onChange={(e) => setSelectedCategory(e.target.value)}>
             <option value="personal">🔴 Personal</option>
             <option value="freelance">🔵 Freelance</option>
             <option value="work">🟡 Work</option>
           </select>
-
-          
           <input
             type="text"
             value={taskInput}
             onChange={(e) => setTaskInput(e.target.value)}
             placeholder="What is your next task?"
           />
-          
-          
           <button onClick={addTask}>Add</button>
         </div>
 
+        {/* Active Task t */}
         <ul className="task-list">
-          {tasks.map((task) => (
+          {tasks.filter(task => !task.completed).map((task) => (
             <li key={task.id} className={`task-item ${task.category}`}>
-            
               <input
                 type="checkbox"
                 checked={task.completed}
                 onChange={() => toggleComplete(task.id)}
               />
-              
-              {/*pag nmag edit mag labas ng input*/}
               {editingId === task.id ? (
                 <input
                   type="text"
@@ -121,24 +96,33 @@ const ToDoApp = () => {
                   {task.text}
                 </span>
               )}
-
-              {/* ito saan banda ko isave */}
               {editingId === task.id ? (
-                <button onClick={() => saveEdit(task.id)}>💾</button>
+                <button onClick={() => saveEdit(task.id)}>save</button>
               ) : (
                 <button onClick={() => startEditing(task.id, task.text)}>✏️</button>
               )}
-              
-            
-              <button onClick={() => deleteTask(task.id)} className="delete-btn">
-                ❌
-                {/* yey tapos naaa */}
-              </button>
+              <button onClick={() => deleteTask(task.id)} className="delete-btn">delete</button>
+            </li>
+          ))}
+        </ul>
+
+        {/* Done Task List */}
+        <h2 className="focus-task">DONE TASKS</h2>
+        <ul className="task-list">
+          {tasks.filter(task => task.completed).map((task) => (
+            <li key={task.id} className="task-item completed">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleComplete(task.id)}
+              />
+              <span className="completed">{task.text}</span>
+              <button onClick={() => deleteTask(task.id)} className="delete-btn">delete</button>
             </li>
           ))}
         </ul>
       </main>
-    </div>
+   
   );
 };
 
